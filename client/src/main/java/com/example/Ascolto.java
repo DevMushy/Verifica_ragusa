@@ -34,7 +34,7 @@ public class Ascolto extends Thread{
             System.out.println(br.readLine());
             System.out.println(br.readLine()); 
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
+
             e1.printStackTrace();
         }
 
