@@ -1,29 +1,38 @@
 package com.example;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientHandler extends Thread {
 
     private Socket s;
     private static int biglietti = 5;
+    private ArrayList<ClientHandler> clients;
 
-    public ClientHandler(Socket s) {
+        private PrintWriter pr;
+        private BufferedReader br;
+    
+
+    public ClientHandler(Socket s, ArrayList<ClientHandler>  clients) {
         this.s = s;
-        setName("serverSgravoz");
+        setName("aoSoTroppoForte");
+        this.clients = clients; 
+        try {
+            br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            pr = new PrintWriter(s.getOutputStream(), true);
+        } catch (IOException e) {
+            
+            e.getMessage();
+        }
     }
 
     public void run() {
         try {
             System.out.println("Client connesso");
-
-            // per parlare
-            PrintWriter pr = new PrintWriter(s.getOutputStream(), true);
-
-            // per ascoltare
-            BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
             System.out.println(br.readLine());
             pr.println("Ciao, scegli un'azione da fare:");
@@ -33,6 +42,11 @@ public class ClientHandler extends Thread {
             boolean StartStop = true;
 
             while (StartStop) {
+                if(biglietti == 0){
+                    for (int i = 0; i < clients.size(); i++) {
+                        clients.get(i).pr.println("biglietti esauriti");
+                    }
+                }
                 String scelta = br.readLine();
                 switch (scelta) {
 
@@ -41,7 +55,7 @@ public class ClientHandler extends Thread {
                             pr.println("Biglietto acquistato");
                             biglietti = biglietti - 1;
                         } else if (biglietti == 0) {
-                            pr.println("Biglietto esauriti");
+                            pr.println("biglietti esauriti");
                         }
                         break;
                     case ("D"):

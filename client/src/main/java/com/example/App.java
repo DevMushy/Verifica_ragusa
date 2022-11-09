@@ -11,6 +11,8 @@ public class App
         Socket s = new Socket("localhost", 3000);
         boolean StartStop = true;
         String stringa;
+        Ascolto ascolto = new Ascolto(s);
+        ascolto.start();
         
         // per parlare
         PrintWriter pr = new PrintWriter(s.getOutputStream(), true);
@@ -22,18 +24,11 @@ public class App
         BufferedReader tastiera = new BufferedReader(new InputStreamReader(System.in));
 
         pr.println("Eccomi");
-        System.out.println(br.readLine());
-        System.out.println(br.readLine()); 
 
-        do {
+
+        while (StartStop){
             pr.println(tastiera.readLine());
-            stringa = br.readLine();
-            if(stringa.equals("fine")){
-                StartStop = false;
-            }else{
-                System.out.println(stringa);
-            }
-        } while (StartStop);
+        };
         
         System.out.println("client chiuso");
         
