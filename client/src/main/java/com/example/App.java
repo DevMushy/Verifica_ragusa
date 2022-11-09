@@ -16,9 +16,6 @@ public class App
         
         // per parlare
         PrintWriter pr = new PrintWriter(s.getOutputStream(), true);
-        
-        // per ascoltare
-        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
         // per la tastiera
         BufferedReader tastiera = new BufferedReader(new InputStreamReader(System.in));
