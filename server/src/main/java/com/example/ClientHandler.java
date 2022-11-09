@@ -72,7 +72,7 @@ public class ClientHandler extends Thread {
             s.close();
 
         } catch (Exception e) {
-            System.out.println("CIAO");
+            e.getMessage();
         }
 
     }
